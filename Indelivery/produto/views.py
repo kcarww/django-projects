@@ -4,38 +4,50 @@ from .models import Produto, Categoria, Opcoes, Adicional
 
 
 def home(request):
-    if not request.session.get('carrinho'):
-        request.session['carrinho'] = []
-        request.session.save()
-    produtos = Produto.objects.all()
-    categorias = Categoria.objects.all()
-    return render(request, 'home.html', {'produtos': produtos,
-                                        'carrinho': len(request.session['carrinho']),
-                                        'categorias': categorias,
-                                        })
-
-def categorias(request, id):
-    produtos = Produto.objects.filter(categoria_id = id)
-    categorias = Categoria.objects.all()
-
-    return render(request, 'home.html', {'produtos': produtos,
-                                        'carrinho': len(request.session['carrinho']),
-                                        'categorias': categorias,})
-
-def produto(request, id):
-    if not request.session.get('carrinho'):
-        request.session['carrinho'] = []
-        request.session.save()
-    erro = request.GET.get('erro')
-    produto = Produto.objects.filter(id=id)[0]
-    categorias = Categoria.objects.all()
-    return render(request, 'produto.html', {'produto': produto, 
+    if request.session.get('usuario'):
+        if not request.session.get('carrinho'):
+            request.session['carrinho'] = []
+            request.session.save()
+        produtos = Produto.objects.all()
+        categorias = Categoria.objects.all()
+        return render(request, 'home.html', {'produtos': produtos,
                                             'carrinho': len(request.session['carrinho']),
                                             'categorias': categorias,
-                                            'erro': erro})
+                                            })
+    else:
+        return redirect('/auth/login?status=2')
+
+def categorias(request, id):
+    if request.session.get('usuario'):
+        produtos = Produto.objects.filter(categoria_id = id)
+        categorias = Categoria.objects.all()
+
+        return render(request, 'home.html', {'produtos': produtos,
+                                            'carrinho': len(request.session['carrinho']),
+                                            'categorias': categorias,})
+    else:
+        return redirect('/auth/login?status=2')
+
+def produto(request, id):
+    if request.session.get('usuario'):
+        if not request.session.get('carrinho'):
+            request.session['carrinho'] = []
+            request.session.save()
+        erro = request.GET.get('erro')
+        produto = Produto.objects.filter(id=id)[0]
+        categorias = Categoria.objects.all()
+        return render(request, 'produto.html', {'produto': produto, 
+                                                'carrinho': len(request.session['carrinho']),
+                                                'categorias': categorias,
+                                                'erro': erro})
+    else:
+        return redirect('/auth/login?status=2')
 
 
 def add_carrinho(request):
+    if not request.session.get('usuario'):
+        return redirect('/auth/login?status=2')
+    
     if not request.session.get('carrinho'):
         request.session['carrinho'] = []
         request.session.save()
@@ -104,6 +116,8 @@ def add_carrinho(request):
 
 
 def ver_carrinho(request):
+    if not request.session.get('usuario'):
+        return redirect('/auth/login?status=2')
     categorias = Categoria.objects.all()
     dados_motrar = []
     for i in request.session['carrinho']:
@@ -125,6 +139,8 @@ def ver_carrinho(request):
                                              })
 
 def remover_carrinho(request, id):
+    if not request.session.get('usuario'):
+        return redirect('/auth/login?status=2')
     print('removendo')
     request.session['carrinho'].pop(id)
     request.session.save()

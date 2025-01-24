@@ -21,10 +21,10 @@ def cadastrar(request: HttpRequest) -> HttpResponse:
 
         usuario_banco = Usuario.objects.filter(nome=username) 
         if len(usuario_banco) > 0:
-            return redirect('/cadastro?status=1')
+            return redirect('/auth/cadastro?status=1')
         
         if len(password) < 8:
-            return redirect('/cadastro?status=2')
+            return redirect('/auth/cadastro?status=2')
         
         try:
             password = sha256(password.encode()).hexdigest()
@@ -34,14 +34,15 @@ def cadastrar(request: HttpRequest) -> HttpResponse:
                 email = email
                 )
             usuario.save()
-            return redirect('/cadastro?status=0')
+            return redirect('/auth/cadastro?status=0')
         except:
-            return redirect('/cadastro')
+            return redirect('/auth/cadastro')
 
     
 def login(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
-        return render(request, 'login.html')
+        status = request.GET.get('status')
+        return render(request, 'login.html', {'status': status})
     else:
         user = request.POST['username']
         password = request.POST['password']
@@ -50,12 +51,12 @@ def login(request: HttpRequest) -> HttpResponse:
         password = sha256(password.encode()).hexdigest()
         usuario = Usuario.objects.filter(nome = user).filter(senha = password)
         if len(usuario) == 0:
-            return redirect('/login')
+            return redirect('/auth/login?status=1')
         elif len(usuario) > 0:
             request.session['usuario'] = usuario[0].id
-            return redirect('/')
+            return redirect('/produto/home/')
         
 # função de logout
 def logout(request: HttpRequest) -> HttpResponse:
     request.session.flush()
-    return redirect('/login')
+    return redirect('/auth/login')

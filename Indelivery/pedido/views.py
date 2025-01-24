@@ -5,7 +5,9 @@ from .models import Pedido, ItemPedido, CupomDesconto
 from produto.models import Produto, Categoria
 import json
 
-def finalizar_pedido(request):  
+def finalizar_pedido(request):
+    if not request.session.get('usuario'):
+        return redirect('/auth/login?status=2')  
     if request.method == "GET":
         categorias = Categoria.objects.all()
         erro = request.GET.get('erro')
@@ -72,6 +74,9 @@ def finalizar_pedido(request):
             return redirect('/pedidos/finalizar_pedido?erro=1')
 
 def validaCupom(request):
+    if not request.session.get('usuario'):
+        return redirect('/auth/login?status=2')
+    
     cupom = request.POST.get('cupom')
     cupom = CupomDesconto.objects.filter(codigo = cupom)
     if len(cupom) > 0 and cupom[0].ativo:
