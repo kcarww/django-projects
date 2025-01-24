@@ -41,7 +41,6 @@ def add_carrinho(request):
         request.session.save()
 
     x = dict(request.POST)
-    print(x, '<<<<<<<<< xxxx')
 
     def removeLixo(adicional):
         adicionais = x.copy()
@@ -54,7 +53,6 @@ def add_carrinho(request):
         return adicionais
         
     adicionais = removeLixo(x)    
-    print(adicionais, '<<<<<<<<< adicionais')
 
     id = int(x['id'][0])
     preco_total = Produto.objects.filter(id=id)[0].preco
