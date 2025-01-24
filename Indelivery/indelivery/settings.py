@@ -57,7 +57,7 @@ ROOT_URLCONF = 'indelivery.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # aqui é pra dizer onde o django vai procurar os templates.
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,8 +70,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'indelivery.wsgi.application'
 
+
+WSGI_APPLICATION = 'indelivery.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
