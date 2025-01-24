@@ -54,3 +54,8 @@ def login(request: HttpRequest) -> HttpResponse:
         elif len(usuario) > 0:
             request.session['usuario'] = usuario[0].id
             return redirect('/')
+        
+# função de logout
+def logout(request: HttpRequest) -> HttpResponse:
+    request.session.flush()
+    return redirect('/login')
