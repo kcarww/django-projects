@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2>Detalhes do Pedido #{{ pedido.id }}</h2>
+  <p><strong>Status:</strong> {{ pedido.get_status_display }}</p>
+  <p><strong>Data:</strong> {{ pedido.data_pedido|date:"d/m/Y H:i" }}</p>
+  <p><strong>Forma de pagamento:</strong> {{ pedido.forma_pagamento }}</p>
+
+  <hr>
+
+  <h4>Itens do Pedido</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Unitário</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in pedido.itens.all %}
+        <tr>
+          <td>{{ item.produto.nome }}</td>
+          <td>{{ item.quantidade }}</td>
+          <td>R$ {{ item.preco_unitario }}</td>
+          <td>R$ {{ item.subtotal }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="text-end">
+    <h4>Total: <span class="text-success">R$ {{ pedido.valor_total }}</span></h4>
+  </div>
+
+  <div class="mt-4">
+    <a href="{% url 'home_produto' %}" class="btn btn-primary">Continuar Comprando</a>
+    <a href="{% url 'obrigado_pedido' pedido.id %}" class="btn btn-outline-secondary">Voltar</a>
+  </div>
+</div>
+{% endblock %}

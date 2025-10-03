@@ -1,0 +1,7 @@
+asgiref==3.9.2
+Django==5.2.7
+gitdb==4.0.12
+GitPython==3.1.41
+pillow==11.3.0
+smmap==5.0.2
+sqlparse==0.5.3

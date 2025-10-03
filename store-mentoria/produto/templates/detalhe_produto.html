@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ produto.nome }} - Detalhes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+    
+    <div class="col-md-6 text-center">
+      {% if produto.imagem %}
+        <img src="{{ produto.imagem.url }}" class="img-fluid rounded shadow" alt="{{ produto.nome }}">
+      {% else %}
+        <img src="{% static 'img/produto_default.png' %}" class="img-fluid rounded shadow" alt="Imagem não disponível">
+      {% endif %}
+    </div>
+
+    <div class="col-md-6">
+      <h2>{{ produto.nome }}</h2>
+      <p class="text-muted">{{ produto.descricao }}</p>
+      <p class="h4 text-primary fw-bold">R$ {{ produto.preco }}</p>
+      <p><strong>Estoque:</strong> {{ produto.estoque }}</p>
+
+      <div class="d-flex gap-2 mt-4">
+        <a href="#" class="btn btn-success btn-lg">
+          <i class="bi bi-cart-plus"></i> Adicionar ao Carrinho
+        </a>
+        <a href="{% url 'home_produto' %}" class="btn btn-outline-secondary btn-lg">
+          Voltar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

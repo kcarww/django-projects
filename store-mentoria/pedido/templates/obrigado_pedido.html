@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Obrigado pela compra!{% endblock %}
+
+{% block content %}
+<div class="container my-5 text-center">
+  <div class="card shadow-lg p-5">
+    <i class="bi bi-bag-check text-success" style="font-size: 4rem;"></i>
+    <h2 class="mt-3">Obrigado pela sua compra!</h2>
+    <p class="lead">Seu pedido foi realizado com sucesso.</p>
+    
+    <h4 class="my-3">Número do Pedido: 
+      <span class="badge bg-success">#{{ pedido.id }}</span>
+    </h4>
+
+    <p><strong>Forma de pagamento:</strong> {{ pedido.forma_pagamento }}</p>
+    <p><strong>Total pago:</strong> R$ {{ pedido.valor_total }}</p>
+
+    <div class="mt-4">
+      <a href="{% url 'detalhe_pedido' pedido.id %}" class="btn btn-outline-primary">
+        Ver detalhes do pedido
+      </a>
+      <a href="{% url 'home_produto' %}" class="btn btn-success">Continuar Comprando</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary bg-gradient">
+    <div class="container py-5">
+        <div class="row justify-content-center align-items-center min-vh-100 py-5">
+            <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+                <div class="text-center mb-4">
+                    <h1 class="h4 mt-3 mb-0">Bem-vindo</h1>
+                    <p class="text-muted mb-0">Acesse sua conta para continuar</p>
+                </div>
+
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h5 text-center mb-4">Login</h2>
+                        <form method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="login" class="form-label">Login</label>
+                                <input type="text" class="form-control" name="email" id="login" placeholder="Digite seu login" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="password" class="form-label">Senha</label>
+                                <input type="password" class="form-control" name="senha" id="password" placeholder="Digite sua senha" required>
+                            </div>
+                            <div class="d-flex justify-content-end mb-3">
+                                <a href="#" class="link-primary small text-decoration-none">Esqueceu a senha?</a>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Entrar</button>
+                                <a class="btn btn-outline-secondary" href="{% url 'registrar' %}">Cadastrar</a>
+                            </div>
+
+                            <div class="d-flex align-items-center my-3">
+                                <hr class="flex-grow-1 m-0">
+                                <span class="px-2 text-muted small">ou</span>
+                                <hr class="flex-grow-1 m-0">
+                            </div>
+
+                            <div class="text-center text-muted small">
+                                Ao continuar, você concorda com nossos Termos e Política de Privacidade.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <p class="text-center text-muted small mt-3 mb-0">© 2025 Todos os direitos reservados</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
